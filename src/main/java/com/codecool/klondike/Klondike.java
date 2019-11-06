@@ -23,8 +23,8 @@ public class Klondike extends Application {
         Game game = new Game();
         game.setTableBackground(new Image("/table/green.png"));
         primaryStage.setTitle("Klondike Solitaire");
-        Button button = new Button();
         primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
+        primaryStage.setMaximized(true);
     }
 }
