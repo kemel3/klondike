@@ -84,6 +84,14 @@ public class Pile extends Pane {
         setEffect(gaussianBlur);
     }
 
+    public boolean checkIfTopCardValueNotEquals(int value){
+        Card topCard = getTopCard();
+        if (topCard != null){
+            return topCard.hasValue(value);
+        }
+        return false;
+    }
+
     public enum PileType {
         STOCK,
         DISCARD,

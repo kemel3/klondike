@@ -96,6 +96,10 @@ public class Card extends ImageView {
         return result;
     }
 
+    public boolean hasValue(int value){
+        return this.rank.getValue() == value;
+    }
+
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
         for (Suit suit : Suit.values()) {

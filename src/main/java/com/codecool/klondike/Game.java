@@ -90,7 +90,13 @@ public class Game extends Pane {
 
     public boolean isGameWon() {
         //TODO
-        return false;
+        boolean isWon = false;
+        for (int i=0; i < foundationPiles.size(); i++) {
+            if (foundationPiles.get(i).isEmpty() || foundationPiles.get(i).checkIfTopCardValueNotEquals(13)){
+                isWon = false;
+                }
+            }
+        return isWon;
     }
 
     public Game() {
