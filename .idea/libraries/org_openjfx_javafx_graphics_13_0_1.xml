@@ -4,6 +4,8 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/13.0.1/javafx-graphics-13.0.1.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/13.0.1/javafx-graphics-13.0.1-linux.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/13.0.1/javafx-base-13.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/13.0.1/javafx-base-13.0.1-linux.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

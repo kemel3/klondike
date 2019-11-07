@@ -12,6 +12,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,7 @@ public class Game extends Pane {
     private static double FOUNDATION_GAP = 0;
     private static double TABLEAU_GAP = 30;
 
+    private Stage primaryStage;
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         Card card = (Card) e.getSource();
@@ -63,7 +65,20 @@ public class Game extends Pane {
         double offsetY = e.getSceneY() - dragStartY;
 
         draggedCards.clear();
-        draggedCards.add(card);
+        //draggedCards.add(card);
+
+        if (!card.isFaceDown()) {
+            if (activePile.getPileType() != Pile.PileType.DISCARD) {
+                for (int i = activePile.getCards().indexOf(card); i < activePile.getCards().size(); i++) {
+                    draggedCards.add(activePile.getCards().get(i));
+                }
+            } else {
+                if (activePile.getPileType() == Pile.PileType.DISCARD) {
+                    //   System.out.println("Card " + card.getShortName() + " to be removed from discard.");
+                }
+                draggedCards.add(card);
+            }
+        }
 
         card.getDropShadow().setRadius(20);
         card.getDropShadow().setOffsetX(10);
@@ -78,30 +93,30 @@ public class Game extends Pane {
         if (draggedCards.isEmpty())
             return;
         Card card = (Card) e.getSource();
-        Pile pile = getValidIntersectingPile(card, tableauPiles);
+        Pile pile = getValidIntersectingPile(card, foundationPiles);
         //TODO
         if (pile != null) {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+//            draggedCards = null;
         }
     };
 
     public boolean isGameWon() {
         //TODO
         boolean isWon = false;
-        for (int i=0; i < foundationPiles.size(); i++) {
-            if (foundationPiles.get(i).isEmpty() || foundationPiles.get(i).checkIfTopCardValueNotEquals(13)){
+        for (int i = 0; i < foundationPiles.size(); i++) {
+            if (foundationPiles.get(i).isEmpty() || foundationPiles.get(i).checkIfTopCardValueNotEquals(13)) {
                 isWon = false;
-                }
             }
+        }
         return isWon;
     }
 
-    public Game() {
+    public Game(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         deck = Card.createNewDeck();
-        Collections.shuffle(deck);
         initPiles();
         dealCards();
     }
@@ -114,14 +129,38 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //TODO
         System.out.println("Stock refilled from discard pile.");
+        for (Card card : discardPile.getCards()) {
+            stockPile.addCard(card);
+        }
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
+        if (destPile.getPileType() == Pile.PileType.FOUNDATION) {
+            if (destPile.isEmpty()) {   // Empty pile and card is an ace
+                return card.getRank() == Rank.ACE;
+            }
+
+            Card topCard = destPile.getTopCard();
+            if (Card.isSameSuit(card, topCard)) {
+                return Rank.isNextRank(card, topCard);
+            }
+        }
+
+        //Move to tableaus
+        if (destPile.getPileType() == Pile.PileType.TABLEAU) {
+            if (destPile.isEmpty()) {
+                return card.getRank() == Rank.KING;
+            }
+
+            Card topCard = destPile.getTopCard();
+            if (Card.isOppositeColor(card, topCard)) {
+                return Rank.isPreviousRank(card, topCard);
+            }
+        }
         return true;
     }
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
         for (Pile pile : piles) {
@@ -143,6 +182,7 @@ public class Game extends Pane {
         if (destPile.isEmpty()) {
             if (destPile.getPileType().equals(Pile.PileType.FOUNDATION))
                 msg = String.format("Placed %s to the foundation.", card);
+
             if (destPile.getPileType().equals(Pile.PileType.TABLEAU))
                 msg = String.format("Placed %s to a new pile.", card);
         } else {
@@ -183,6 +223,16 @@ public class Game extends Pane {
             tableauPile.setLayoutY(275);
             tableauPiles.add(tableauPile);
             getChildren().add(tableauPile);
+        }
+    }
+
+    public void makeTopCardVisible() {
+        for (int i = 0; i < tableauPiles.size(); i++) {
+            if (tableauPiles.get(i).getTopCard().isFaceDown()) {
+                if (!tableauPiles.get(i).isEmpty() && tableauPiles.get(i).getTopCard().isFaceDown()) {
+                    tableauPiles.get(i).getTopCard().flip();
+                }
+            }
         }
     }
 
