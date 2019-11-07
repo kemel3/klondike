@@ -3,7 +3,7 @@
     <properties maven-id="org.openjfx:javafx-controls:13.0.1" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/13.0.1/javafx-controls-13.0.1.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/13.0.1/javafx-controls-13.0.1-linux.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/13.0.1/javafx-controls-13.0.1-win.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

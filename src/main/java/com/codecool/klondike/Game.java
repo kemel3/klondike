@@ -121,9 +121,25 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
+
+        if (!destPile.isEmpty()) {
+
+            if (destPile.getPileType() == Pile.PileType.TABLEAU) {
+                if ((card.getSuit().getColor() == destPile.getTopCard().getSuit().getColor()) || (destPile.getTopCard().getRank().getValue() - card.getRank().getValue() != 1)) {
+                    return false;
+
+                } else {
+                    return true;
+                }
+            }
+           // else if(de){}
+             else {
+                return true;
+            }
+        }
         return true;
     }
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
         for (Pile pile : piles) {
