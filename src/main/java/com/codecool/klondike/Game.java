@@ -75,6 +75,8 @@ public class Game extends Pane {
     };
 
     private EventHandler<MouseEvent> onMouseReleasedHandler = e -> {
+//        System.out.println(draggedCards);
+        System.out.println(tableauPiles);
         if (draggedCards.isEmpty())
             return;
         Card card = (Card) e.getSource();
@@ -84,7 +86,7 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+//            draggedCards = null;
         }
     };
 
@@ -93,7 +95,7 @@ public class Game extends Pane {
         boolean isWon = false;
         for (int i=0; i < foundationPiles.size(); i++) {
             if (foundationPiles.get(i).isEmpty() || foundationPiles.get(i).checkIfTopCardValueNotEquals(13)){
-                isWon = false;
+                isWon = true;
                 }
             }
         return isWon;
@@ -127,6 +129,7 @@ public class Game extends Pane {
         for (Pile pile : piles) {
             if (!pile.equals(card.getContainingPile()) && isOverPile(card, pile) && isMoveValid(card, pile))
                 result = pile;
+            System.out.println("Test");
         }
         return result;
     }
