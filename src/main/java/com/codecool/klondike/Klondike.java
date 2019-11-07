@@ -5,13 +5,21 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.awt.*;
 
 public class Klondike extends Application {
 
-    private static final double WINDOW_WIDTH = 1500;
-    private static final double WINDOW_HEIGHT = 900;
+    static void initStage(Stage primaryStage) {
+        final double WINDOW_WIDTH = 1400;
+        final double WINDOW_HEIGHT = 900;
+        Card.loadCardImages();
+        Game game = new Game(primaryStage);
+        game.setTableBackground(new Image("/table/green.png"));
+
+        primaryStage.setTitle("Klondike Solitaire");
+        primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
+        primaryStage.show();
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -19,12 +27,8 @@ public class Klondike extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Card.loadCardImages();
-        Game game = new Game(primaryStage);
-        game.setTableBackground(new Image("/table/green.png"));
-        primaryStage.setTitle("Klondike Solitaire");
-        Button button = new Button();
-        primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
-        primaryStage.show();
+        Klondike.initStage(primaryStage);
     }
+
+
 }

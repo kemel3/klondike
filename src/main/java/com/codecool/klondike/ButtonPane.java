@@ -9,13 +9,11 @@ public class ButtonPane extends Pane {
 
     Button restartButton;
 
-
     public ButtonPane() {
 
         Image image = new Image("/button/reset.png");
         ImageView imageView = new ImageView(image);
         restartButton = new Button("",imageView);
-
 
         this.getChildren().add(restartButton);
     }
@@ -27,5 +25,4 @@ public class ButtonPane extends Pane {
     public void setRestartButton(Button restartButton){
         this.restartButton = restartButton;
     }
-
 }
