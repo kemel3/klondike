@@ -1,6 +1,7 @@
 # IDEA folder
 .idea/
 *.iml
+*.xml
 
 # Compiled class file
 *.class
