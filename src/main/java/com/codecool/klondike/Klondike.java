@@ -15,10 +15,10 @@ public class Klondike extends Application {
         Card.loadCardImages();
         Game game = new Game(primaryStage);
         game.setTableBackground(new Image("/table/green.png"));
-
         primaryStage.setTitle("Klondike Solitaire");
         primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
+        primaryStage.setMaximized(true);
     }
 
     public static void main(String[] args) {
@@ -29,6 +29,4 @@ public class Klondike extends Application {
     public void start(Stage primaryStage) {
         Klondike.initStage(primaryStage);
     }
-
-
 }
